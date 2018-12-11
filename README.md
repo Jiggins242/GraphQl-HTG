@@ -1,5 +1,5 @@
 # GraphQl-HTG
 
-Inside the src folder 
-run: nodemon index.js 
+Inside the hackernews-node folder 
+run: nodemon src/index.js 
 this will start up the app 
