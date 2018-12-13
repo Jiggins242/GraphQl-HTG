@@ -13,3 +13,6 @@ this will start up and update the prisma database graphql api's (i think)
 inside the hackernews-node dir
 run: graphql playground 
 this will lauch the playground with the app api and the database api on the same playground
+
+inside the playground to get the user info on a post event
+add their user token to the http headers 
