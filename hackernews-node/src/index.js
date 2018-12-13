@@ -3,10 +3,7 @@ const { Prisma } = require ('prisma-binding');
 
 const resolvers = {
     Query: {
-        info: () => 'This is the API call',
-        feed: (parent, args, context, info) => {
-            return context.db.query.links({}, info)
-        }
+        info: () => 'This is the API call'
     },
 
     Mutation: {
