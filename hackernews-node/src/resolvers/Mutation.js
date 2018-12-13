@@ -58,9 +58,38 @@ async function signup(parent, args, context, info) {
       user,
     }
   }
+
+  async function vote(parent, args, context, info) {
+
+    // Validate the incoming JWT with the getUserId helper function. If it’s valid, the function will return the userId of the User who is making the requests
+    const userId = getUserId(context)
+  
+    // Exists function takes a where filter object that allows to specify certain conditions about elements of that type
+    // Only if the condition applies to at least one element in the database, the exists function returns true
+    // Verify that the requesting User has not yet voted for the Link that’s identified by args.linkId
+    const linkExists = await context.db.exists.Vote({
+      user: { id: userId },
+      link: { id: args.linkId }
+    })
+    if (linkExists) {
+      throw new Error(`Already voted for link: ${args.linkId}`)
+    }
+  
+    // If exists returns false, the createVote will be used to create a new Vote element that’s connected to the User and the Link
+    return context.db.mutation.createVote(
+      {
+        data: {
+          user: { connect: { id: userId } },
+          link: { connect: { id: args.linkId } },
+        },
+      },
+      info,
+    )
+  }
   
   module.exports = {
       signup,
       login,
       post,
+      vote
   }
